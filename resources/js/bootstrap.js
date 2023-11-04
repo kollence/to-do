@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from "lodash";
 window._ = _;
 
 /**
@@ -7,11 +7,40 @@ window._ = _;
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-import axios from 'axios';
+import axios from "axios";
 window.axios = axios;
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+window.axios.defaults.withCredentials = true;
+// window.axios.create({
+//     baseURL: 'http://vu3lara9.test',
+//     withCredentials: true
+// });
+window.axios.interceptors.request.use(
+    (config) => {
+        if (localStorage.getItem("token") !== null) {
+            let tok = localStorage.getItem("token");
+            config.headers["Authorization"] = `Bearer ${tok}`;
+        }
+        return config;
+    },
+    (error) => {
+        Promise.reject(error);
+    }
+);
+window.axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response.status === 401 || error.response?.status === 419) {
+            // console.log(error.response)
+            if (localStorage.getItem("token") !== null) {
+                localStorage.removeItem("token");
+                location.assign("/login");
+            }
+        }
+        return Promise.reject(error);
+    }
+);
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
