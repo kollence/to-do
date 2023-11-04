@@ -12,6 +12,10 @@ npm install @vitejs/plugin-vue
 
 npm i bootstrap
 
+npm install vuex
+
+npm install -S vue-sweetalert2
+
 npm install
 
 npm run dev
