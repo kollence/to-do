@@ -1,25 +1,24 @@
 <template>
-    <div>
-      <p>Count: {{ count }}</p>
-      <button @click="incrementCount">Increment</button>
-      <button @click="decrementCount">Decrement</button>
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <h3 class="text-center">{{ message }}</h3>
+            <nav-component></nav-component>
+            <router-view></router-view>
+        </div>
     </div>
-  </template>
-  
-  <script>
-  import { mapState, mapActions } from "vuex";
-  
-  export default {
-    computed: {
-      ...mapState("counter", ["count"]), // "counter" is the module name, "count" is the state property
+</template>
+<script>
+import Nav from "./components/Nav.vue"; // Import the Nav.vue component
+export default {
+    components: {
+        "nav-component": Nav, // Register the Nav.vue component as "nav-component"
     },
-    methods: {
-      ...mapActions("counter", ["incrementCount", "decrementCount"]), // Actions from the "counter" module
-    },
-  };
-  </script>
-  
-  
-  
-  
+    data() {
+        return {
+            message: "ToDo App"
+        }
+    }
+}
+</script>
   
