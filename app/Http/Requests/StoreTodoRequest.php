@@ -27,7 +27,6 @@ class StoreTodoRequest extends FormRequest
             'title' => 'required',
             'description' => 'required',
             'user_id' => ['required', 'exists:users,id'],
-            'completed' => ['required','boolean']
         ];
     }
 }
