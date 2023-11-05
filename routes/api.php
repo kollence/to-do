@@ -31,4 +31,5 @@ Route::group(['middleware'=>'auth:sanctum'], function () {
     });
 
     Route::apiResource('todos', TodoController::class);
+    Route::put('/todos-completion/{id}', [TodoController::class, 'updateCompletion']);
 });
