@@ -1,6 +1,5 @@
 <template>
     <nav  class="row justify-content-center ">
-        
         <div  class="col-md-6 mt-2">
             <div v-if="isAuthenticated" class="d-flex justify-content-between">
                 <div class="">
@@ -11,13 +10,10 @@
                         Create
                     </router-link>
                 </div>
-                <small class="pt-2">welcome: {{ getUser.name }}</small>
+                <small class="pt-2">welcome: {{ getUser }}</small>
                 <div class="">
                     <form @submit.prevent="logout()" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex pt-10">
                         <button type="submit" class="btn btn-link">
-                            <!-- <div v-show="store.isUserLoading" class="inline-block animate-spin w-4 h-4 mr-2 border-t-2 border-t-white border-r-2 border-r-white border-b-2 border-b-white border-l-2 border-l-blue-600 rounded-full"></div>
-                                <span v-if="store.isUserLoading">Processing...</span>
-                                <span v-else>Logout</span> -->
                             Logout
                         </button>
                     </form>
@@ -56,7 +52,7 @@ export default {
             return this.$store.getters['auth/isAuthenticated'];
         },
         getUser() {
-            return this.$store.getters['auth/getUser'];
+            return this.$store.state.auth.user.user.name;
         },
     },
 };

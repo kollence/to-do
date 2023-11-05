@@ -13,7 +13,7 @@ import Home from '../pages/Home.vue'
 import Register from '../pages/Register.vue'
 
 function auth(to,from,next){
-    if(localStorage.getItem('token')){
+    if(localStorage.getItem('user')){
         next()
         return
     }

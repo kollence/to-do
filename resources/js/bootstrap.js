@@ -18,9 +18,9 @@ window.axios.defaults.withCredentials = true;
 // });
 window.axios.interceptors.request.use(
     (config) => {
-        if (localStorage.getItem("token") !== null) {
-            let tok = localStorage.getItem("token");
-            config.headers["Authorization"] = `Bearer ${tok}`;
+        if (localStorage.getItem("user") !== null) {
+            let tok = JSON.parse(localStorage.getItem('user'))
+            config.headers["Authorization"] = `Bearer ${tok.token}`;
         }
         return config;
     },
@@ -32,9 +32,9 @@ window.axios.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response.status === 401 || error.response?.status === 419) {
-            // console.log(error.response)
-            if (localStorage.getItem("token") !== null) {
-                localStorage.removeItem("token");
+            let tok = JSON.parse(localStorage.getItem('user'))
+            if (tok !== null) {
+                localStorage.removeItem("user");
                 location.assign("/login");
             }
         }
