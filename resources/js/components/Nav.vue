@@ -3,7 +3,7 @@
         <div  class="col-md-6 mt-2">
             <div v-if="isAuthenticated" class="d-flex justify-content-between">
                 <div class="">
-                    <router-link :to="{ name: 'todo' }" class="btn btn-link">
+                    <router-link :to="{ name: 'todos' }" class="btn btn-link">
                         List
                     </router-link>
                     <router-link :to="{ name: 'todo.create' }" class="btn btn-link">

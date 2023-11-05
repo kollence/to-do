@@ -22,7 +22,7 @@ const actions = {
             axios.post("/api/register", createdCase)
                 .then((result) => {
                     commit("SET_USER", result.data.data);
-                    resolve("todo");
+                    resolve("todos");
                 })
                 .catch((e) => {
                     console.log(e);
@@ -37,7 +37,7 @@ const actions = {
             axios.post("/api/login", createdCase)
                 .then((result) => {
                     commit("SET_USER", result.data.data);
-                    resolve("todo");
+                    resolve("todos");
                 })
                 .catch((e) => {
                     console.log(e);

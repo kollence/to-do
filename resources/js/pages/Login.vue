@@ -53,33 +53,3 @@
     },
   };
   </script>
-  
-
-<!-- <script>
-import axios from 'axios'
-
-export default {
-    data() {
-        return {
-            form: {
-            email: '',
-            password: '',
-            },
-            errors: { },
-        }
-    },
-    methods: {
-        async handleLogin() {
-            try {
-                // await this.$store.dispatch('login', this.form)
-                await axios.get('/sanctum/csrf-cookie');
-                await axios.post('/api/login', this.form)
-                this.$router.push('todo') 
-                alert('Login successful!')
-            } catch (error) {
-                this.errors = error.response.data.errors
-            }
-        }
-    }
-}
-</script> -->

@@ -51,8 +51,8 @@ const routes = [
         beforeEnter: auth,
         children: [
             {
-                path: '/todo',
-                name: 'todo',
+                path: '/todos',
+                name: 'todos',
                 component: ToDo,
                 meta: {title:'Todo List'},
             },

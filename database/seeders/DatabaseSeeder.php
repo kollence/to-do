@@ -14,15 +14,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $users = \App\Models\User::factory(5)->create();
+        $users = \App\Models\User::factory()->count(5)->create()->each(function ($user) {
+            $user->createToken('my-api-token')->plainTextToken;
+
+            \App\Models\Todo::factory()->count(5)->create(['user_id'=>$user->id]);
+        });
 
         \App\Models\User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@mail.com',
         ]);
-        foreach ($users as $user) {
-            $user->createToken('my-api-token')->plainTextToken;
-        }
 
     }
 }
