@@ -19,9 +19,6 @@
                             <div class="col-3">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
-                            <div class="col-3">
-                                <button type="button" class="btn btn-warning">Complete</button>
-                            </div>
                         </div>
 
                     </form>

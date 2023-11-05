@@ -1,11 +1,11 @@
 <template>
     <div>
         <ul class="no-bollets p-0 m-0">
-            <li v-for="todo in todos" :key="todo.id" class="row justify-content-between py-2 overflow-hidden">
-                <div class="col"><router-link :to="{ name: 'todo.show', params: { id: todo.id } }">{{ todo.title
+            <li v-for="todo in todos" :key="todo.id" class="row pt-1 my-1 rounded justify-content-between py-2 overflow-hidden" :class="{'completed-todo': todo.completed, 'not-completed-todo': !todo.completed}">
+                <div class="col  text-dark"><router-link class="text-dark" :to="{ name: 'todo.show', params: { id: todo.id } }">{{ todo.title
                 }}</router-link></div>
-                <div class="col-3 mr-auto">
-                    <button @click="toggleCompletion(todo)" class="btn btn-sm btn-success p-1">{{ todo.completed ? 'Completed' : 'Complete' }}</button>
+                <div class="col-3 mr-auto  text-dark">
+                    <button @click="toggleCompletion(todo)" :class="{'not-completed-todo': todo.completed, 'completed-todo': !todo.completed}" class="btn btn-sm btn-success p-1 text-warning">{{ todo.completed ? '&#x2714;' : '&#x2716;' }}</button>
                 </div>
             </li>
         </ul>
@@ -42,4 +42,12 @@ ul.no-bullets {
 li {
     max-height: 39px;
 }
+
+.completed-todo {
+    background-color: green;
+  }
+
+  .not-completed-todo {
+    background-color: rgb(180, 180, 180);
+  }
 </style>
