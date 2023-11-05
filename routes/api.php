@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthApiController;
+use App\Http\Controllers\Api\TodoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,5 +30,5 @@ Route::group(['middleware'=>'auth:sanctum'], function () {
         ]];
     });
 
-    Route::apiResource('todo', TodoController::class);
+    Route::apiResource('todos', TodoController::class);
 });
