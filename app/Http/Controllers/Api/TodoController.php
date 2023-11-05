@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTodoRequest;
+use App\Http\Requests\UpdateTodoRequest;
 use App\Http\Resources\TodoResource;
 use App\Models\Todo;
 use Illuminate\Http\Request;
@@ -32,24 +34,14 @@ class TodoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTodoRequest $request)
     {
-        //
+        return new TodoResource(Todo::create($request->all()));
     }
 
     /**
@@ -58,20 +50,9 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Todo $todo)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return new TodoResource($todo);
     }
 
     /**
@@ -81,9 +62,11 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTodoRequest $request, Todo $todo)
     {
-        //
+        $this->authorize('update', $todo);
+        $todo->update($request->all());
+        return new TodoResource($todo);
     }
 
     /**
@@ -92,8 +75,30 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Todo $todo)
     {
-        //
+        $this->authorize('delete', $todo);
+        return Todo::destroy($todo->id);
+    }
+
+    public function updateCompletion(Request $request, $id)
+    {
+        $todo = Todo::find($id);
+        
+        if (!$todo) {
+            return response()->json(['message' => 'Todo not found'], 404);
+        }
+        $this->authorize('update', $todo);
+        
+
+        $data = $request->validate([
+            'completed' => ['required', 'boolean'],
+        ]);
+        
+        $todo->update([
+            'completed' => $data['completed'],
+        ]);
+    
+        return response()->json(['message' => $todo->completed]);
     }
 }
