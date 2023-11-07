@@ -30,7 +30,7 @@ router.beforeEach(async (to, from, next) => {
       } catch (error) {
         // Handle network errors or any other issues
         console.error('Authentication check failed:', error);
-        next({ name: 'error' });
+        next({ name: 'home' });
       }
     } else {
       // For other routes, no authentication check is needed, so continue navigating
