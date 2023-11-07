@@ -19,8 +19,10 @@
                             <div class="col-3">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
+                            <div class="col-3">
+                                <router-link class="btn btn-secondary" :to="{ name: 'todos' }">Cancel</router-link>
+                            </div>
                         </div>
-
                     </form>
                 </div>
             </div>
