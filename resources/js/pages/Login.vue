@@ -27,6 +27,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary">Login</button>
+                <span v-if="error" class="alert text-danger ml-5">{{ error }}!</span>
               </form>
             </div>
           </div>
@@ -42,13 +43,17 @@
           email: '',
           password: '',
         },
+        error: null
       };
     },
     methods: {
       async loginUser() {
         // Call the Vuex action for login
         await this.$store.dispatch('auth/login', this.formData).then(path => {
+            this.error = null
             this.$router.push(path)
+        }).catch((errorMsg) => {
+            this.error = errorMsg
         });
       },
     },

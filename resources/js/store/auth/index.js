@@ -25,8 +25,8 @@ const actions = {
                     resolve("todos");
                 })
                 .catch((e) => {
-                    console.log(e);
-                    reject("Registration failed");
+                    console.log(e.response.data.message);
+                    reject(e.response.data.message);
                 });
         });
     },
@@ -40,8 +40,8 @@ const actions = {
                     resolve("todos");
                 })
                 .catch((e) => {
-                    console.log(e);
-                    reject("login failed");
+                    console.log(e.response.data.message);
+                    reject(e.response.data.message);
                 });
         });
     },
