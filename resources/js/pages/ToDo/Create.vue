@@ -11,7 +11,7 @@
                         </div>
                         <div class="form-group">
                             <label for="desc">Description</label>
-                            <textarea v-model="newTodo.description" class="form-control" id="desc"
+                            <textarea v-model="newTodo.description" class="form-control" id="desc" required
                                 placeholder="Todo Description"></textarea>
                         </div>
                         <br>
@@ -38,22 +38,29 @@ export default {
     methods: {
         async createNewTodo() {
             try {
-                await this.$store.dispatch('todo/createTodo', this.newTodo).then(path => {
-                    this.$router.push('/todos')
-                    this.$swal.fire({
-                        title: 'Todo Created!',
-                        text: 'Your new todo has been created successfully.',
-                        icon: 'success',
-                        confirmButtonText: 'OK',
-                    });
-                });
+                await this.$store.dispatch('todo/createTodo', this.newTodo)
+                    .then((res) => {
+                        if (res.hasOwnProperty('errors')) {
+                            this.$swal.fire({
+                                title: 'Error!',
+                                text: res.errors,
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            })
+                        } else {
+                            this.$router.push('/todos')
+                            this.$swal.fire({
+                                title: 'Todo Updated!',
+                                text: res.success,
+                                icon: 'success',
+                                confirmButtonText: 'OK',
+                            });
+                            // Optionally, you can reset the form or redirect the user here
+                            this.newTodo.title = '';
+                            this.newTodo.description = '';
+                        }
+                    })
 
-                // If the creation is successful, show a success Swal notification
-
-
-                // Optionally, you can reset the form or redirect the user here
-                this.newTodo.title = '';
-                this.newTodo.description = '';
             } catch (error) {
                 // Handle errors or show an error Swal notification if needed
                 console.error('Error creating todo:', error);

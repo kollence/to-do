@@ -55,20 +55,23 @@ const actions = {
         try {
             const response = await axios.post("/api/todos", newTodo); // Replace with your API endpoint
             commit("ADD_TODO", response.data.data);
+            return {success: 'Successfully Updated Todo'}
         } catch (error) {
-            console.error("Error creating todo: ", error);
+            // console.error("Error creating todo: ", error);
+            return {errors: error.response.data.message}
         }
     },
     async updateTodo({ commit }, updatedTodo) {
         const edited = {...updatedTodo};
         try {
-            const response = await axios.put(
-                `/api/todos/${edited.id}`,
+            const response = await axios.put(`/api/todos/${edited.id}`, // Replace with your API endpoint
                 edited
-            ); // Replace with your API endpoint
+            ); 
             commit("UPDATE_TODO", response.data.data);
+            return {success: 'Successfully Updated Todo'}
         } catch (error) {
-            console.error("Error updating todo: ", error);
+            // console.error("Error updating todo: ", error);
+            return {errors: error.response.data.message}
         }
     },
     async deleteTodo({ commit }, todoId) {

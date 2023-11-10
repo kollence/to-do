@@ -11,7 +11,7 @@
                         </div>
                         <div class="form-group">
                             <label for="desc">Description</label>
-                            <textarea v-model="form.description" class="form-control" id="desc"
+                            <textarea v-model="form.description" class="form-control" id="desc" required
                                 placeholder="Todo Description"></textarea>
                         </div>
                         <br>
@@ -48,20 +48,32 @@ export default {
     methods: {
         async updateTodo() {
             try {
-                await this.$store.dispatch('todo/updateTodo', this.form);
-                this.$router.push('/todos')
-                this.$swal.fire({
-                    title: 'Todo Updated!',
-                    text: 'Your todo has been updated successfully.',
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                });
+                await this.$store.dispatch('todo/updateTodo', this.form)
+                    .then((res) => {
+                        if (res.hasOwnProperty('errors')) {
+                            this.$swal.fire({
+                                title: 'Error!',
+                                text: res.errors,
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            })
+                        } else {
+                            this.$router.push('/todos')
+                            this.$swal.fire({
+                                title: 'Todo Updated!',
+                                text: res.success,
+                                icon: 'success',
+                                confirmButtonText: 'OK',
+                            });
+                        }
+                    })
+
             } catch (error) {
                 console.error('Error updating todo:', error);
 
                 this.$swal.fire({
                     title: 'Error',
-                    text: 'An error occurred while updating the todo.',
+                    text: error,
                     icon: 'error',
                     confirmButtonText: 'OK',
                 });
