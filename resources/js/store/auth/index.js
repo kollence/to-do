@@ -21,8 +21,13 @@ const actions = {
             const createdCase = { ...userData };
             axios.post("/api/register", createdCase)
                 .then((result) => {
-                    commit("SET_USER", result.data.data);
-                    resolve("todos");
+                    if(!!result.data?.error){
+                        reject(result.data.error);
+                    }else{
+                        commit("SET_USER", result.data.data);
+                        resolve("todos");
+                    };
+                    
                 })
                 .catch((e) => {
                     console.log(e.response.data.message);
