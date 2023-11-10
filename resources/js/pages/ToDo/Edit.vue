@@ -49,7 +49,7 @@ export default {
         async updateTodo() {
             try {
                 await this.$store.dispatch('todo/updateTodo', this.form);
-
+                this.$router.push('/todos')
                 this.$swal.fire({
                     title: 'Todo Updated!',
                     text: 'Your todo has been updated successfully.',
